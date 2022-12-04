@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+#define REP(i,a,b) for(int i=a;i<b;i++)
+#define MAX(a,b) (a > b ? a : b)
+#define MIN(a,b) (a<b ? a : b)
+#define F first
+#define S second
+#define pb push_back
+#define mp make_pair
+#define pf printf
+#define sf scanf
+
+using namespace std;
+typedef long long ll;
+typedef long double ld;
+typedef vector<char> vc;
+typedef vector<int> vi;
+typedef vector<vector<int>> vvi;
+typedef map<int, int> mii;
+typedef set<int> si;
+typedef set<string> ss;
+
+void solve()
+{
+    int n, q;
+    sf("%d", &n);
+    vector<pair<int, int>> dmg(n );
+    int cnt1 = 0, cnt0 = 0, min = INT_MAX;
+    ll sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sf("%d", &q);
+        q == 1 ? cnt1++ : cnt0++;
+        dmg[i].second = q;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        sf("%d", &q);
+        dmg[i].first = q;
+        min = MIN(min, q);
+    }
+    if (cnt1 == cnt0)sum -= min;
+    sort(dmg.rbegin(), dmg.rend());
+    // for (auto it : dmg) cout << it.first << " " << it.second << endl;
+    for (auto it : dmg) {
+        if (it.second == 0) {
+            if (cnt1 != 0) {
+                sum += 2 * (it.first);
+                cnt1--;
+                continue;
+            }
+            sum += (it.first);
+        }
+        else {
+            if (cnt0 != 0) {
+                sum += 2 * (it.first);
+                cnt0--;
+                continue;
+            }
+            sum += (it.first);
+
+        }
+    }
+
+    pf("%lld\n", sum);
+}
+int main()
+{
+    int t = 1;
+    sf("%d", &t);
+    while (t--)
+    {
+        solve();
+    }
+}
