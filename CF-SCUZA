@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define REP(i,a,b) for(int i=a;i<b;i++)
+#define MAX(a,b) (a > b ? a : b)
+#define MIN(a,b) (a<b ? a : b)
+#define eb emplace_back
+#define endl '\n'
+#define mod 1e9+7
+#define INF 1e18+7
+
+#ifndef ONLINE_JUDGE
+#define debugvs(vs) cerr<<#vs<<" [ "; printvs(vs);  //set/vector
+#define debugp(p) cerr<<#p;         printp(p);      //pair
+#define debugm(m) cerr<<#m<<endl;   printm(m);      //map
+#define debug(x) cerr<<#x;          print(x);       //normal
+#else
+#define debug(p)
+#define debugvs(vs)
+#define debugm(m)
+#define debug(x)
+#endif
+using namespace std;
+typedef long long ll;
+typedef long double ld;
+template<typename T> void print(T t) {cerr << " : " << t << endl;}
+template<typename VS> void printvs(VS vs) {for (auto it : vs) {cerr << it << " ";} cerr << "]" << endl;}
+template<typename P> void printp(P p) {cerr << " [ " << p.first << " : " << p.second << " ]" << endl;}
+template<typename M> void printm(M m) {for (auto it : m)printp(it);}
+
+void solve()
+{
+	int n, q; cin >> n >> q;
+	map<ll, ll> stair;
+	ll lg = 0, ls = 0;
+	for (int i = 0; i < n; i++) {
+		int x; cin >> x;
+		debug(lg)
+		if (x > lg) {
+			lg = x;
+			stair[x] += x + ls;
+			ls = stair[x];
+		} else {
+			stair[lg] += x;
+			ls = stair[lg];
+		}
+	}
+	debugm(stair)
+	map<ll, ll>::iterator it;
+	while (q--) {
+		int x; cin >> x;
+		it = stair.lower_bound(x);
+		if ((*it).first == x) {
+			cout << (*it).second << " ";
+		} else if (it == stair.begin()) {
+			cout << "0 ";
+		} else {
+			--it;
+			cout << (*it).second << " ";
+		}
+	}
+	cout << endl;
+}
+int main()
+{
+	fastio()
+#ifndef ONLINE_JUDGE
+	freopen("Error.txt", "w", stderr);
+	auto start_time = clock();
+
+#endif
+	int t = 1;
+	cin >> t;
+	while (t--)
+	{
+		solve();
+	}
+#ifndef ONLINE_JUDGE
+	auto end_time = clock();
+	cerr << "Execution time: " << (end_time - start_time)*(int)1e3 / CLOCKS_PER_SEC << " ms\n";
+#endif
+}
