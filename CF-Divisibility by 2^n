@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define REP(i,a,b) for(int i=a;i<b;i++)
+#define MAX(a,b) (a > b ? a : b)
+#define MIN(a,b) (a<b ? a : b)
+#define eb emplace_back
+#define endl '\n'
+#define mod 1e9+7
+#define INF 1e18+7
+
+#ifndef ONLINE_JUDGE
+#define debugvs(vs) cerr<<#vs<<" [ "; printvs(vs);  //set/vector
+#define debugp(p) cerr<<#p;         printp(p);      //pair
+#define debugm(m) cerr<<#m<<endl;   printm(m);      //map
+#define debug(x) cerr<<#x;          print(x);       //normal
+#else
+#define debug(p)
+#define debugvs(vs)
+#define debugm(m)
+#define debug(x)
+#endif
+using namespace std;
+typedef long long ll;
+typedef long double ld;
+template<typename T> void print(T t) {cerr << " : " << t << endl;}
+template<typename VS> void printvs(VS vs) {for (auto it : vs) {cerr << it << " ";} cerr << "]" << endl;}
+template<typename P> void printp(P p) {cerr << " [ " << p.first << " : " << p.second << " ]" << endl;}
+template<typename M> void printm(M m) {for (auto it : m)printp(it);}
+int calc(int x) {
+	int cnt = 0;
+	while ((x & 1) == 0)
+		cnt++, x /= 2;
+	return cnt;
+}
+void solve()
+{
+	ll n, mn = INT_MAX, x, cnt = 0, op = 0; cin >> n;
+	vector<int>a;
+	REP(i, 1, n + 1) {
+		cin >> x;
+		if (cnt != n)
+			cnt += calc(x);
+
+	}
+	if (cnt == n) cout << "0\n" ;
+	else {
+		for (int i = (log2(n)); i >= 1; i--) {
+			if (cnt >= n)break;
+			x = pow(2, i);
+			for (int j = 1; j * x <= n; j += 2) {
+				if (cnt >= n)break;
+				cnt += i, op += 1;
+			}
+		}
+		if (cnt >= n) cout << op << endl;
+		else cout << "-1\n";
+
+	}
+}
+int main()
+{
+	fastio()
+#ifndef ONLINE_JUDGE
+	freopen("Error.txt", "w", stderr);
+	auto start_time = clock();
+
+#endif
+	int t = 1;
+	cin >> t;
+	while (t--)
+	{
+		solve();
+	}
+#ifndef ONLINE_JUDGE
+	auto end_time = clock();
+	cerr << "Execution time: " << (end_time - start_time)*(int)1e3 / CLOCKS_PER_SEC << " ms\n";
+#endif
+}
