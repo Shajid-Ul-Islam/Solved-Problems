@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define REP(i,a,b) for(int i=a;i<b;i++)
+#define MAX(a,b) (a > b ? a : b)
+#define MIN(a,b) (a<b ? a : b)
+#define eb emplace_back
+#define endl '\n'
+#define mod 1e9+7
+#define INF 1e18+7
+
+#ifndef ONLINE_JUDGE
+#define debugvs(vs) cerr<<#vs<<" [ "; printvs(vs);  //set/vector
+#define debugp(p) cerr<<#p;         printp(p);      //pair
+#define debugm(m) cerr<<#m<<endl;   printm(m);      //map
+#define debug(x) cerr<<#x;          print(x);       //normal
+#else
+#define debug(p)
+#define debugvs(vs)
+#define debugm(m)
+#define debug(x)
+#endif
+using namespace std;
+typedef long long ll;
+typedef long double ld;
+template<typename T> void print(T t) {cerr << " : " << t << endl;}
+template<typename VS> void printvs(VS vs) {for (auto it : vs) {cerr << it << " ";} cerr << "]" << endl;}
+template<typename P> void printp(P p) {cerr << " [ " << p.first << " : " << p.second << " ]" << endl;}
+template<typename M> void printm(M m) {for (auto it : m)printp(it);}
+
+int main()
+{
+	fastio()
+#ifndef ONLINE_JUDGE
+	freopen("Error.txt", "w", stderr);
+	auto start_time = clock();
+#endif
+
+	int tc; cin >> tc;
+	while (tc--)
+	{
+		int n; cin >> n;
+		vector<int> a(n + 1), pfx(n + 1, 0);
+		for (int i = 1; i <= n; i++) {
+			cin >> a[i];
+			pfx[i] += pfx[i - 1] + a[i];
+		}
+		int bgn = 1, ans = n, res = n;
+		while (bgn <= n) {
+			if (bgn > res && res != 0) break;
+			int thk = bgn, sum = 0, lim = pfx[bgn];
+
+			for (int i = bgn + 1, j = 1; i <= n; i++, j++) {
+				sum += a[i];
+				thk = max(thk, j);
+				if (i == n && sum == lim) ans = thk;
+				if (sum == lim) sum = 0, j = 0;
+				else if (sum > lim) break;
+			}
+			bgn++;
+			res = min(res, ans);
+		}
+		cout << res << '\n';
+	}
+
+
+#ifndef ONLINE_JUDGE
+	auto end_time = clock();
+	cerr << "Execution time: " << (end_time - start_time)*(int)1e3 / CLOCKS_PER_SEC << " ms\n";
+#endif
+}
