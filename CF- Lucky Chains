@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+#ifndef ONLINE_JUDGE
+#include "LOCAL_DEBUG.h"
+#endif
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define MAX(a,b) (a > b ? a : b)
+#define MIN(a,b) (a<b ? a : b)
+#define eb emplace_back
+#define MOD 1e9+7
+#define INF 1e18+7
+using namespace std;
+
+const int N = 1e7 + 10;
+int A[N];
+void seive() {
+
+	for (int i = 2; i <= N; i++) {
+		if (A[i])
+			continue;
+		for (int j =  i; j <= N; j += i)
+			A[j] = i;
+	}
+}
+vector<int> getprimes(int v)
+{
+	vector<int> vec;
+	while (v > 1) {
+		if (vec.empty() || vec.back() != A[v])
+			vec.eb(A[v]);
+		v /= A[v];
+	}
+	return vec;
+}
+int main()
+{
+	fastio()
+#ifndef ONLINE_JUDGE
+	freopen("Error.txt", "w", stderr);
+#endif
+	int tc = 1;
+	cin >> tc;
+	seive();
+	while (tc--)
+	{
+		int x, y, d, num, res = INT_MAX;
+		cin >> x >> y;
+		num = y - x;
+		if (num == 1) {
+			cout << "-1\n"; continue;
+		}
+		for (auto p : getprimes(num))
+		{
+			res = MIN(res, ( p - x % p) % p );
+		}
+		cout << res << '\n';
+	}
+}
