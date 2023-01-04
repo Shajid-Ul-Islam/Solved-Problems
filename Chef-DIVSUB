@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+int main()
+{
+	int t; cin >> t;
+	while (t--)
+	{
+		int n; cin >> n;
+		int a[n];
+		ll sum = 0;
+		bool b = true;
+		pair<int, int> ans{ -1, -1};
+		vector<int> frq[n + 1];
+		for (int i = 0; i < n; ++i) {
+			cin >> a[i];
+			sum += a[i];
+			if (b) {
+				int x = sum % n;
+				if (a[i] % n == 0) {
+					ans.first = i;
+					ans.second = i;
+					b = false;
+				}
+				else if (frq[x].size() != 0) {
+					ans.first = frq[x][0];
+					ans.second = i;
+					b = false;
+				}
+				else if (x == 0) {
+					ans.first = 0;
+					ans.second = i;
+					b = false;
+				}
+				else {
+					frq[x].emplace_back(i + 1);
+				}
+			}
+		}
+		if (ans.first == -1)
+			cout << "-1\n";
+		else {
+			cout << (ans.second - ans.first + 1) << '\n';
+			for (int i = ans.first; i <= ans.second; ++i)
+				cout << i + 1 << ' ';
+			cout << '\n';
+		}
+	}
+}
