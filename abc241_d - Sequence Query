@@ -1,0 +1,75 @@
+/*
+	Author: Shajid Ul Islam
+*/
+#include<bits/stdc++.h>
+#ifndef ONLINE_JUDGE
+#include "LOCAL_DEBUG.h"
+#endif
+#define 		fastio() ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define 		rsrt(v) sort(v.rbegin(),v.rend())
+#define 		srt(v)  sort(v.begin(), v.end())
+#define 		rep(i,x,n) for(int i=x;i<n;++i)
+#define 		yes cout << "YES\n"
+#define 		no cout << "NO\n"
+#define 		eb emplace_back
+#define 		MOD 1e9+7
+#define 		INF 1e18+7
+
+using namespace std;
+typedef 	long long ll;
+typedef 	long double ld;
+typedef 	vector<int> vi;
+typedef 	vector<ll> vll;
+typedef 	vector<char> vc;
+typedef 	map<int, int> mii;
+typedef 	map<int, char> mic;
+typedef 	pair<int, int> pii;
+
+int main()
+{
+	fastio()
+	multiset<ll> a;
+	ll x;
+	int q, k;
+	int t;
+	cin >> q;
+	while (q--) {
+		cin >> t;
+		if (t == 1) {
+			cin >> x;
+			a.insert(x);
+		}
+		else if (t == 2) {			//less or equal
+			cin >> x >> k;
+			auto it = a.upper_bound(x);
+			for (int i = 0;; ++i) {
+				if (i == k) {
+					cout << *it << '\n';
+					break;
+				}
+				else if (it == a.begin()) {
+					cout << "-1\n";
+					break;
+				}
+
+				--it;
+			}
+		}
+		else if (t == 3) {			//greater or equal
+			cin >> x >> k;
+			auto it = a.lower_bound(x);
+
+			for (int i = 1;; ++i) {
+				if (it == a.end()) {
+					cout << "-1\n";
+					break;
+				}
+				else if (i  == k) {
+					cout << *it << " "  << '\n';
+					break;
+				}
+				++it;
+			}
+		}
+	}
+}
