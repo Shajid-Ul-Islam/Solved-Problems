@@ -1,0 +1,60 @@
+/*
+	Author: Shajid Ul Islam
+*/
+#include<bits/stdc++.h>
+#ifndef ONLINE_JUDGE
+#include "LOCAL_DEBUG.h"
+#endif
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define srt(v) sort(v.begin(), v.end())
+#define rsrt(v) sort(v.rbegin(),v.rend())
+#define rep(i,x,n) for(int i=x;i<n;++i)
+#define eb emplace_back
+#define MOD 1e9+7
+#define INF 1e18+7
+
+using namespace std;
+typedef long long ll;
+typedef long double ld;
+typedef vector<int> vi;
+typedef vector<char> vc;
+typedef vector<ll> vll;
+typedef map<int, int> mii;
+typedef map<int, char> mic;
+typedef pair<int, int> pii;
+void solve()
+{
+	int n, q; cin >> n >> q;
+	string s; cin >> s;
+	int a, x, y, tot = 0;
+	while (q--) {
+		cin >> a ;
+		if (a == 1) {
+			cin >> x;
+			tot += x;
+			if (tot >= n)
+				tot %= n;
+		}
+		else {
+			cin >> x;
+			if (x > tot)
+				x -= tot + 1;
+			else
+				x = n - tot + x - 1;
+			cout << s[x] << '\n';
+		}
+	}
+
+
+}
+int main()
+{
+	fastio()
+// #ifndef ONLINE_JUDGE
+// 	freopen("Error.txt", "w", stderr);
+// #endif
+	int tc = 1;
+	// cin >> tc;
+	while (tc--)
+		solve();
+}
