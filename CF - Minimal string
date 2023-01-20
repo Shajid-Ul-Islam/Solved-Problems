@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+#ifndef ONLINE_JUDGE
+#include "LOCAL_DEBUG.h"
+#endif
+#define 		fastio() ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define 		rsrt(v) sort(v.rbegin(),v.rend())
+#define 		srt(v)  sort(v.begin(), v.end())
+#define 		rep(i,x,n) for(int i=x;i<n;++i)
+#define			all(x) x.begin(),x.end()
+#define 		yes cout << "YES\n"
+#define 		no cout << "NO\n"
+#define 		eb emplace_back
+#define 		MOD 1e9+7
+#define 		INF 1e18+7
+
+using namespace std;
+typedef 	long long ll;
+typedef 	long double ld;
+typedef 	vector<int> vi;
+typedef 	vector<ll> vll;
+typedef 	vector<char> vc;
+typedef 	map<int, int> mii;
+typedef 	map<int, char> mic;
+typedef 	pair<int, int> pii;
+void solve()
+{
+	string s; cin >> s;
+	map<char, int> hash;
+	for (char &c : s)
+		hash[c]++;
+	vc s2;
+	stack<char> stk;
+	auto it = hash.begin();
+	char c;
+	for (int i = 0; i < s.size(); ++i) {
+		char c = it->first;
+		while (!stk.empty() && stk.top() <= c) {
+			s2.eb(stk.top());
+			stk.pop();
+		}
+		if (s[i] == c ) {
+			--hash[c];
+			s2.eb(c);
+			if (!hash[c]) {
+				++it;
+				hash.erase(c);
+			}
+		}
+		else {
+			stk.push(s[i]);
+			--hash[s[i]];
+			if (!hash[s[i]])
+				hash.erase(s[i]);
+		}
+	}
+	for (char &i : s2)
+		cout << i;
+	while (!stk.empty()) {
+		cout << stk.top();
+		stk.pop();
+	}
+	cout << '\n';
+}
+int main()
+{
+	fastio()
+#ifndef ONLINE_JUDGE
+	freopen("Error.txt", "w", stderr);
+#endif
+	int tc = 1;
+	// cin >> tc;
+	while (tc--)
+		solve();
+}
