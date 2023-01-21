@@ -26,24 +26,18 @@ void solve()
 {
 	string a; cin >> a;
 	stack<pair<char, int>> s;
-	unordered_map<int, bool> extra;
+	int n = a.size();
+	vector<bool> extra(n, 0);
 
 	rep(i, 0, (a.size())) {
 		if (a[i] == '(') s.push(make_pair(a[i], i));
 		else if (!s.empty() && a[i] == ')')
 			s.pop();
+		else {
+			extra[i] = 1;
+		}
 	}
-	while (!s.empty()) {
-		extra[s.top().second] = 1;
-		s.pop();
-	}
-	
-	for (int i = a.size() - 1; i >= 0; --i) {
-		if (a[i] == ')')
-			s.push(make_pair(a[i], i));
-		else if (!s.empty() && a[i] == '(')
-			s.pop();
-	}
+
 	while (!s.empty()) {
 		extra[s.top().second] = 1;
 		s.pop();
@@ -51,7 +45,6 @@ void solve()
 
 	int len = 0;
 	pii ans(0, 1);
-	debugm(extra)
 	rep(i, 0, (a.size()))	{
 		if (extra[i]) {
 			len = 0;
