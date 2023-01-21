@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+#ifndef ONLINE_JUDGE
+#include "LOCAL_DEBUG.h"
+#endif
+#define 		fastio() ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define 		rsrt(v) sort(v.rbegin(),v.rend())
+#define 		srt(v)  sort(v.begin(), v.end())
+#define 		rep(i,x,n) for(int i=x;i<n;++i)
+#define			all(x) x.begin(),x.end()
+#define 		yes cout << "YES\n"
+#define 		no cout << "NO\n"
+#define 		eb emplace_back
+#define 		MOD 1e9+7
+#define 		INF 1e18+7
+
+using namespace std;
+typedef 	long long ll;
+typedef 	long double ld;
+typedef 	vector<int> vi;
+typedef 	vector<ll> vll;
+typedef 	vector<char> vc;
+typedef 	map<int, int> mii;
+typedef 	map<int, char> mic;
+typedef 	pair<int, int> pii;
+void solve()
+{
+	string s; cin >> s;
+	stack<char> stk;
+	for (char &c : s) {
+		if (stk.empty())
+			stk.push(c);
+		else if (stk.top() != c) {
+			stk.push(c);
+		}
+		else if (stk.top() == c) {
+			stk.pop();
+		}
+	}
+	if (!stk.empty() )
+		no;
+	else
+		yes;
+}
+int main()
+{
+	fastio()
+#ifndef ONLINE_JUDGE
+	freopen("Error.txt", "w", stderr);
+#endif
+	int tc = 1;
+	// cin >> tc;
+	while (tc--)
+		solve();
+}
