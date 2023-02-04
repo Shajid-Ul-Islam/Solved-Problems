@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+#ifndef ONLINE_JUDGE
+#include "LOCAL_DEBUG.h"
+#endif
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL);
+
+using namespace std;
+
+string s1, s2;
+string multiply( char c) {
+    string s;
+    int x = c - '0', y, carry = 0;
+    for (int j = s1.size() - 1; j >= 0; --j) {
+        char i = s1[j];
+        y = i - '0';
+        int p = x * y + carry, q = p % 10;
+        carry = p / 10;
+        string ss = to_string(q);
+        s = ss + s;
+    }
+    if (carry)
+        s = to_string(carry) + s;
+    return s;
+}
+string add(string &ans, string &s3) {
+    if (ans.size() == 0)
+        return s3;
+    int l = ans.size() - 1, m = s3.size() - 1, carry = 0;
+
+    for (int i = l; i >= 0; --i) {
+        int x = ans[i] - '0', y = s3[m] - '0', z = x + y + carry;
+        string t = to_string((z % 10 ));
+        if (z >= 10)
+            carry = 1;
+        else
+            carry = 0;
+        ans[i] = t[0];
+        m--;
+    }
+    for (int i = m; i >= 0; --i) {
+        int x = s3[i] - '0', z = x + carry;
+        string t = to_string(z % 10);
+        carry = z / 10;
+        ans = t + ans;
+    }
+    if (carry)
+        ans = to_string(carry) + ans;
+
+    return ans;
+}
+int main()
+{
+
+    int t = 1;
+
+    while ((getline(cin, s1)), getline(cin, s2)) {
+        if (s1 == "0" || s2 == "0") {
+            cout << "0\n";
+            continue;
+        }
+        // cout << s1 << " " << s2 << '\n';
+        string s3, s4, ans;
+        for (int i = s2.size() - 1; i >= 0; --i) {
+            s3 = multiply(s2[i]);
+
+            int j = s2.size() - i - 1;
+
+            while (j--)
+                s3 = s3 + "0";
+            ans = add(ans, s3); //add func
+        }
+        cout << ans << '\n';
+    }
+
+}
