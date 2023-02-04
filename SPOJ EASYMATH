@@ -1,0 +1,79 @@
+#include<bits/stdc++.h>
+#ifndef ONLINE_JUDGE
+#include "LOCAL_DEBUG.h"
+#endif
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL);
+
+using namespace std;
+typedef long long ll;
+
+vector<vector<ll>> generate(vector<ll> &a)
+{
+	int sz = a.size(), ct = (1 << sz);
+	vector<vector<ll>> subsets;
+	for (int i = 1; i < ct; ++i)
+	{
+		vector<ll>subset;
+		for (int j = 0; j < sz; ++j) {
+			if ( ( (1 << j) & i) ) {
+				subset.push_back(a[j]);
+			}
+		}
+		subsets.push_back(subset);
+	}
+
+	return subsets;
+}
+ll gcd(ll a, ll b) {
+	if (a == 0)
+		return b;
+	return gcd(b % a, a);
+}
+ll lcmf(ll a , ll b) {
+	return ((a * b) / gcd(a, b));
+}
+int main()
+{
+	fastio()
+	int t; cin >> t;
+	while (t--)
+	{
+		ll n, m, aa, d;
+		cin >> n >> m >> aa >> d;
+		vector<ll> a;
+		for (int i = 0; i < 5; ++i)
+			a.push_back((aa + i * d));
+
+		for (auto it = a.begin(); it != a.end(); ++it) {
+			for (auto jk = it + 1; jk != a.end();) {
+				if (*jk % *it == 0) {
+					a.erase(jk);
+				}
+				else
+					++jk;
+			}
+		}
+		vector<vector<ll>> subsets = generate(a);
+		ll cnt = 0;
+		// for (auto v : subsets) {
+		// 	for (auto e : v)
+		// 		cout << e << ' ';
+		// 	cout << '\n';
+
+		// }
+		--n;
+		for (auto &v : subsets) {
+			ll lcm = v[0];
+			for (ll &e : v) {
+				lcm = lcmf(lcm, e);
+			}
+			if ((v.size() & 1)) {
+				cnt += m / lcm - n / lcm;
+			}
+			else
+				cnt -= (m / lcm - n / lcm);
+		}
+		cout << m - n  - cnt << '\n';
+
+	}
+}
