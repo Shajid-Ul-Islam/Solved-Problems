@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+#ifndef ONLINE_JUDGE
+#include "LOCAL_DEBUG.h"
+#endif
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL);
+
+using namespace std;
+void dfs(int vrtx, vector<vector<int>> &graph , vector<int>&ans , vector<bool> &vis) {
+	if (vis[vrtx])
+		return;
+	vis[vrtx] = true;
+	for (auto &v : graph[vrtx]) {
+		dfs(v, graph, ans, vis);
+	}
+	ans.push_back(vrtx);
+}
+
+int main()
+{
+	fastio()
+	int n, m;
+	while (cin >> n >> m, n) {
+		vector<vector<int>>graph(n + 1);
+		for (int i = 0; i < m; ++i) {
+			int x, y; cin >> x >> y;
+			graph[x].push_back(y);
+		}
+		vector<bool> vis(n + 1, false);
+		vector<int> ans;
+		for (int i = 1; i <= n; ++i) {
+			if (vis[i])
+				continue;
+			dfs(i, graph, ans, vis);
+		}
+		reverse(ans.begin(), ans.end());
+		for (int &i : ans)
+			cout << i << ' ';
+		cout << '\n';
+	}
+
+}
