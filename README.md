@@ -1,3 +1,4 @@
 # Solved-Problems
-Problems I solved for CP
+Problems I solved for Competitive Programming
+and
 Some tutorials and templates
